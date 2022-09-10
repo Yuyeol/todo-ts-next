@@ -1,8 +1,8 @@
 export type TagProps = {
   id: string;
   name: string;
-  font: string;
-  background: string;
+  fontColor: string;
+  backgroundColor: string;
 };
 
 export type TodoProps = {

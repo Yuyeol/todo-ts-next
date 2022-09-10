@@ -1,14 +1,22 @@
 import { css } from '@emotion/react';
 export const Common = {
   colors: {
+    white: '#FFFFFF',
+    black: '#000000',
     grey600: '#25282B',
     grey400: '#75787B',
     grey200: '#C5C8CB',
     grey100: '#EDF0F3',
+    background: '#F1F6FF',
+    border: '#C2CDEA',
+    point: '#D3E3FF',
   },
   fonts: {
     Pretendard700: 'Pretendard-700',
     Pretendard400: 'Pretendard-400',
+  },
+  shadow: {
+    main: '0px 3px 4px rgba(7, 77, 117, 0.18)',
   },
 };
 const global = css`
@@ -160,6 +168,7 @@ const global = css`
     display: block;
   }
   body {
+    background: ${Common.colors.background};
     line-height: 1.5;
   }
   ol,

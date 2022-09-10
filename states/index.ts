@@ -13,8 +13,18 @@ export const todoState = atom({
       completeDate: '2022-06-06',
       isComplete: false,
       tags: [
-        { id: '1', name: '1', font: '#FFFFFF', background: '#000000' },
-        { id: '2', name: '2', font: '#FFFFFF', background: '#000000' },
+        {
+          id: '1',
+          name: '1',
+          fontColor: '#FFFFFF',
+          backgroundColor: '#000000',
+        },
+        {
+          id: '2',
+          name: '2',
+          fontColor: '#FFFFFF',
+          backgroundColor: '#000000',
+        },
       ],
     },
     {
@@ -27,8 +37,18 @@ export const todoState = atom({
       completeDate: '2022-06-06',
       isComplete: false,
       tags: [
-        { id: '1', name: '1', font: '#FFFFFF', background: '#000000' },
-        { id: '2', name: '2', font: '#FFFFFF', background: '#000000' },
+        {
+          id: '1',
+          name: '1',
+          fontColor: '#FFFFFF',
+          backgroundColor: '#000000',
+        },
+        {
+          id: '2',
+          name: '2',
+          fontColor: '#FFFFFF',
+          backgroundColor: '#000000',
+        },
       ],
     },
   ],
