@@ -6,9 +6,10 @@ import { todoState } from 'states';
 
 const Home: NextPage = () => {
   const [todos] = useRecoilState(todoState);
+
   return (
     <div>
-      <Box />
+      <Seo title="홈" />
       <TodoList todos={todos} />
     </div>
   );
