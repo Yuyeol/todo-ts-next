@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { TodoProps } from 'types';
-import TodoInput from './TodoInput';
 import TodoItem from './TodoItem';
 
 const Container = styled.div`
@@ -14,7 +13,6 @@ type Props = {
 const TodoList = ({ todos }: Props) => {
   return (
     <Container>
-      <TodoInput />
       {todos.map((todo) => (
         <TodoItem key={todo.id} todo={todo} />
       ))}
