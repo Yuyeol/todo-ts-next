@@ -169,6 +169,9 @@ const global = css`
     background: ${Common.colors.background};
     line-height: 1.5;
   }
+  div {
+    box-sizing: border-box;
+  }
   ol,
   ul {
     list-style: none;
@@ -189,6 +192,7 @@ const global = css`
     border-spacing: 0;
   }
   input {
+    box-sizing: border-box;
     color: ${Common.colors.grey600};
     ::placeholder {
       color: ${Common.colors.grey200};
@@ -196,6 +200,17 @@ const global = css`
     border: none;
     &:focus {
       outline: none;
+    }
+  }
+  textarea {
+    box-sizing: border-box;
+    border: none;
+    resize: none;
+    &:focus {
+      outline: none;
+    }
+    ::placeholder {
+      color: ${Common.colors.grey200};
     }
   }
   img {

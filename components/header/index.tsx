@@ -10,7 +10,6 @@ const Container = styled.div`
   width: 100%;
   max-width: 500px;
   box-shadow: ${Common.shadows.main};
-  box-sizing: border-box;
   padding: 0.5rem 1rem;
   position: fixed;
   top: 0;

@@ -9,6 +9,8 @@ const Container = styled.div`
   max-width: 500px;
   min-height: 100vh;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Layout = ({ children }: Props) => {

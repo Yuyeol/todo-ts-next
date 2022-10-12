@@ -14,6 +14,8 @@ const Container = styled.div`
   margin-right: 0.25rem;
   margin-bottom: 0.25rem;
   border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
 `;
 
 type Props = {

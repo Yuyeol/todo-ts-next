@@ -4,13 +4,14 @@ import { Common } from 'styles/GlobalStyle';
 const Container = styled.div`
   background: rgba(0, 0, 0, 0.3);
   position: fixed;
+  top: 40px;
   width: 100%;
   height: 100%;
   max-width: 500px;
   overflow: hidden;
   opacity: 1;
-  display: none;
   /* display: block; */
+  display: none;
   transition: opacity 0.3s, display 0.3s;
 `;
 const List = styled.div`
@@ -20,7 +21,6 @@ const List = styled.div`
   min-height: calc(100vh - 40px);
   width: 200px;
   padding: 0.5rem;
-  box-sizing: border-box;
   transform: translateX(0%);
   transition: transform 0.3s;
 `;
