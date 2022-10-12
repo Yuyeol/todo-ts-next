@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import TodoTag from 'components/todoList/TodoTag';
+import TodoTag, { TagProps } from 'components/todoList/TodoTag';
 import { useState } from 'react';
 import { Common } from 'styles/GlobalStyle';
-import { TagProps } from 'types';
 
 const Container = styled.div`
   box-shadow: ${Common.shadows.main};
@@ -57,9 +56,9 @@ const AddButton = styled.div`
   box-shadow: ${Common.shadows.main};
 `;
 
-type Props = {
+interface Props {
   tags: TagProps[];
-};
+}
 
 const TodoInput = ({ tags }: Props) => {
   const [isTagOpen, setIsTagOpen] = useState(false);

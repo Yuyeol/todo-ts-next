@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 const Container = styled.div`
   width: 100%;
   height: 100%;

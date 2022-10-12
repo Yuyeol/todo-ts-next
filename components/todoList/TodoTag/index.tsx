@@ -1,14 +1,8 @@
 import styled from '@emotion/styled';
-import { TagProps } from 'types';
 
-type StyledProps = {
-  fontColor: string;
-  backgroundColor: string;
-};
-
-const Container = styled.div`
-  background: ${(props: StyledProps) => props.backgroundColor};
-  color: ${(props: StyledProps) => props.fontColor};
+const Container = styled.div<{ fontColor: string; backgroundColor: string }>`
+  background: ${(props) => props.backgroundColor};
+  color: ${(props) => props.fontColor};
   text-align: center;
   min-width: 40px;
   margin-right: 0.25rem;
@@ -18,9 +12,16 @@ const Container = styled.div`
   font-size: 12px;
 `;
 
-type Props = {
+export interface TagProps {
+  id: string;
+  name: string;
+  fontColor: string;
+  backgroundColor: string;
+}
+
+interface Props {
   tag: TagProps;
-};
+}
 
 const TodoTag = ({ tag }: Props) => {
   return (
