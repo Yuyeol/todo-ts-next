@@ -1,23 +1,11 @@
-import styled from '@emotion/styled';
-import { TodoProps } from 'types';
-import TodoItem from './TodoItem';
-
-const Container = styled.div`
-  padding: 1rem 1rem 0rem 1rem;
-`;
+import React from 'react';
 
 type Props = {
-  todos: TodoProps[];
+  children: React.ReactNode;
 };
 
-const TodoList = ({ todos }: Props) => {
-  return (
-    <Container>
-      {todos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} />
-      ))}
-    </Container>
-  );
+const TodoList = ({ children }: Props) => {
+  return <>{children}</>;
 };
 
 export default TodoList;
