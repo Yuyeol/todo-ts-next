@@ -53,3 +53,20 @@ export const todoState = atom({
     },
   ],
 });
+export const tagState = atom({
+  key: 'tagState',
+  default: [
+    {
+      id: '1',
+      name: '잡생각',
+      fontColor: '#FFFFFF',
+      backgroundColor: '#000000',
+    },
+    {
+      id: '2',
+      name: '옷',
+      fontColor: '#FFFFFF',
+      backgroundColor: '#000000',
+    },
+  ],
+});
