@@ -1,8 +1,6 @@
 import { css } from '@emotion/react';
 export const Common = {
   colors: {
-    white: '#FFFFFF',
-    black: '#000000',
     grey600: '#25282B',
     grey400: '#75787B',
     grey200: '#C5C8CB',
@@ -15,7 +13,7 @@ export const Common = {
     Pretendard700: 'Pretendard-700',
     Pretendard400: 'Pretendard-400',
   },
-  shadow: {
+  shadows: {
     main: '0px 3px 4px rgba(7, 77, 117, 0.18)',
   },
 };

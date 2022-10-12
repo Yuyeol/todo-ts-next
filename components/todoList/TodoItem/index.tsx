@@ -4,10 +4,10 @@ import { TodoProps } from 'types';
 import TodoTag from '../TodoTag';
 
 const Container = styled.div`
-  box-shadow: ${Common.shadow.main};
+  box-shadow: ${Common.shadows.main};
   margin-bottom: 0.75rem;
   border-radius: 10px;
-  background: ${Common.colors.white};
+  background: white;
   overflow: hidden;
   border: 1px solid ${Common.colors.border};
 `;
