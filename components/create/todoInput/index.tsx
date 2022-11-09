@@ -1,7 +1,12 @@
 import styled from '@emotion/styled';
 import TodoTag, { TagProps } from 'components/todoList/TodoTag';
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { todoState } from 'states';
 import { Common } from 'styles/GlobalStyle';
+import { nanoid } from 'nanoid';
+import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
 
 const Container = styled.div`
   box-shadow: ${Common.shadows.main};
@@ -61,7 +66,43 @@ interface Props {
 }
 
 const TodoInput = ({ tags }: Props) => {
+  const router = useRouter();
+  const [todos, setTodos] = useRecoilState(todoState);
+  const [inputs, setInputs] = useState({
+    title: '',
+    content: '',
+    dueDate: '',
+  });
+  const [addedTags, setAddedTags] = useState<TagProps[]>([]);
   const [isTagOpen, setIsTagOpen] = useState(false);
+  const date = dayjs().format('YYYY-MM-DD');
+
+  const handleInput = (e: { target: { value: string; name: string } }) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
+  };
+  const handleSelectTag = (id: string) => {
+    const selectedTag = tags.find((tag: TagProps) => tag.id === id);
+    const duplicateTag = addedTags?.find((tag: TagProps) => tag.id === id);
+    selectedTag &&
+      (duplicateTag
+        ? setAddedTags(addedTags.filter((tag) => tag.id !== id))
+        : setAddedTags([...addedTags, selectedTag]));
+  };
+  const handleSubmit = () => {
+    setTodos([
+      ...todos,
+      {
+        id: nanoid(),
+        createDate: date,
+        ...inputs,
+        isComplete: false,
+        completeDate: '',
+        modifyDate: '',
+        tags: addedTags,
+      },
+    ]);
+    router.push('/');
+  };
   return (
     <Container>
       <Header
@@ -75,19 +116,27 @@ const TodoInput = ({ tags }: Props) => {
       >
         할 일 작성
       </Header>
-
       <div style={{ padding: '0.5rem 1rem' }}>
-        <DateInput>
-          <div style={{ marginRight: '0.5rem' }}>날짜</div>
-          <input type="date" />
-        </DateInput>
         <TitleInput>
-          <input placeholder="제목" />
+          <input
+            name="title"
+            placeholder="제목"
+            onChange={handleInput}
+            value={inputs.title}
+          />
         </TitleInput>
         <ContentInput>
-          <textarea placeholder="할 일" />
+          <textarea
+            name="content"
+            placeholder="할 일"
+            onChange={handleInput}
+            value={inputs.content}
+          />
         </ContentInput>
-
+        <DateInput>
+          <div style={{ marginRight: '0.5rem' }}>마감일</div>
+          <input name="dueDate" type="date" onChange={handleInput} />
+        </DateInput>
         <div
           onClick={() => setIsTagOpen(!isTagOpen)}
           style={{
@@ -96,7 +145,7 @@ const TodoInput = ({ tags }: Props) => {
             alignItems: 'center',
           }}
         >
-          태그{' '}
+          태그
           <div
             style={{
               marginLeft: '0.5rem',
@@ -113,12 +162,19 @@ const TodoInput = ({ tags }: Props) => {
         {isTagOpen && (
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
             {tags.map((tag) => (
-              <TodoTag key={tag.id} tag={tag} />
+              <div key={tag.id} onClick={() => handleSelectTag(tag.id)}>
+                <TodoTag
+                  key={tag.id}
+                  tag={tag}
+                  isSelected={
+                    !!addedTags.find((addedTag) => addedTag.id === tag.id)
+                  }
+                />
+              </div>
             ))}
           </div>
         )}
-
-        <AddButton>할 일 추가</AddButton>
+        <AddButton onClick={handleSubmit}>할 일 추가</AddButton>
       </div>
     </Container>
   );

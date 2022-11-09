@@ -1,6 +1,8 @@
+import { TodoProps } from 'components/todoList/TodoItem';
+import { TagProps } from 'components/todoList/TodoTag';
 import { atom } from 'recoil';
 
-export const todoState = atom({
+export const todoState = atom<TodoProps[]>({
   key: 'todoState',
   default: [
     {
@@ -53,7 +55,7 @@ export const todoState = atom({
     },
   ],
 });
-export const tagState = atom({
+export const tagState = atom<TagProps[]>({
   key: 'tagState',
   default: [
     {
