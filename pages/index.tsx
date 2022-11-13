@@ -3,15 +3,20 @@ import Seo from 'components/Seo';
 import TodoList from 'components/todoList';
 import TodoItem from 'components/todoList/TodoItem';
 import type { NextPage } from 'next';
-import { useRecoilState } from 'recoil';
-import { todoListState } from 'states';
+import { useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { filteredTodoListState, SHOW_ALL, todoListFilterState } from 'states';
 
 const Container = styled.div`
   padding: 1rem 1rem 0rem 1rem;
 `;
 
 const Home: NextPage = () => {
-  const [todoList] = useRecoilState(todoListState);
+  const todoList = useRecoilValue(filteredTodoListState);
+  const setTodoListFilter = useSetRecoilState(todoListFilterState);
+  useEffect(() => {
+    setTodoListFilter(SHOW_ALL);
+  });
 
   return (
     <Container>

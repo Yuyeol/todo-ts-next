@@ -30,7 +30,7 @@ export const todoListState = atom<TTodo[]>({
       modifyDate: '2022-06-06',
       dueDate: '2022-06-06',
       completeDate: '2022-06-06',
-      isComplete: false,
+      isComplete: true,
       tags: [
         {
           id: '1',
@@ -71,6 +71,32 @@ export const todoListState = atom<TTodo[]>({
       ],
     },
   ],
+});
+
+export const SHOW_ALL = 'Show All';
+export const SHOW_COMPLETED = 'Show Completed';
+export const SHOW_UNCOMPLETED = 'Show Uncompleted';
+
+export const todoListFilterState = atom({
+  key: 'todoListFilterState',
+  default: SHOW_ALL,
+});
+
+export const filteredTodoListState = selector({
+  key: 'filteredTodoListState',
+  get: ({ get }) => {
+    const filter = get(todoListFilterState);
+    const list = get(todoListState);
+
+    switch (filter) {
+      case SHOW_COMPLETED:
+        return list.filter((item) => item.isComplete);
+      case SHOW_UNCOMPLETED:
+        return list.filter((item) => !item.isComplete);
+      default:
+        return list;
+    }
+  },
 });
 
 export const tagState = atom<TTag[]>({
