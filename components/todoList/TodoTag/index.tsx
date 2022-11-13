@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { TTag } from 'states';
 import { Common } from 'styles/GlobalStyle';
 
 const Container = styled.div<{
@@ -18,15 +19,8 @@ const Container = styled.div<{
   font-size: 12px;
 `;
 
-export interface TagProps {
-  id: string;
-  name: string;
-  fontColor: string;
-  backgroundColor: string;
-}
-
 interface Props {
-  tag: TagProps;
+  tag: TTag;
   isSelected?: boolean;
 }
 

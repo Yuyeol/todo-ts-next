@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
+import { TTodo } from 'states';
 import { Common } from 'styles/GlobalStyle';
-import TodoTag, { TagProps } from '../TodoTag';
+import TodoTag from '../TodoTag';
 
 const Container = styled.div`
   box-shadow: ${Common.shadows.main};
@@ -35,20 +36,8 @@ const Date = styled.div`
   text-align: end;
 `;
 
-export interface TodoProps {
-  id: string;
-  title: string;
-  content: string;
-  createDate: string;
-  modifyDate: string;
-  dueDate: string;
-  completeDate: string;
-  isComplete: boolean;
-  tags: TagProps[];
-}
-
 interface Props {
-  todo: TodoProps;
+  todo: TTodo;
 }
 
 const TodoItem = ({ todo }: Props) => {

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import TodoTag, { TagProps } from 'components/todoList/TodoTag';
+import TodoTag from 'components/todoList/TodoTag';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { todoState } from 'states';
+import { todoListState, TTag } from 'states';
 import { Common } from 'styles/GlobalStyle';
 import { nanoid } from 'nanoid';
 import dayjs from 'dayjs';
@@ -62,18 +62,18 @@ const AddButton = styled.div`
 `;
 
 interface Props {
-  tags: TagProps[];
+  tags: TTag[];
 }
 
 const TodoInput = ({ tags }: Props) => {
   const router = useRouter();
-  const [todos, setTodos] = useRecoilState(todoState);
+  const [todos, setTodos] = useRecoilState(todoListState);
   const [inputs, setInputs] = useState({
     title: '',
     content: '',
     dueDate: '',
   });
-  const [addedTags, setAddedTags] = useState<TagProps[]>([]);
+  const [addedTags, setAddedTags] = useState<TTag[]>([]);
   const [isTagOpen, setIsTagOpen] = useState(false);
   const date = dayjs().format('YYYY-MM-DD');
 
@@ -81,8 +81,8 @@ const TodoInput = ({ tags }: Props) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
   const handleSelectTag = (id: string) => {
-    const selectedTag = tags.find((tag: TagProps) => tag.id === id);
-    const duplicateTag = addedTags?.find((tag: TagProps) => tag.id === id);
+    const selectedTag = tags.find((tag: TTag) => tag.id === id);
+    const duplicateTag = addedTags?.find((tag: TTag) => tag.id === id);
     selectedTag &&
       (duplicateTag
         ? setAddedTags(addedTags.filter((tag) => tag.id !== id))

@@ -4,20 +4,20 @@ import TodoList from 'components/todoList';
 import TodoItem from 'components/todoList/TodoItem';
 import type { NextPage } from 'next';
 import { useRecoilState } from 'recoil';
-import { todoState } from 'states';
+import { todoListState } from 'states';
 
 const Container = styled.div`
   padding: 1rem 1rem 0rem 1rem;
 `;
 
 const Home: NextPage = () => {
-  const [todos] = useRecoilState(todoState);
+  const [todoList] = useRecoilState(todoListState);
 
   return (
     <Container>
       <Seo title="홈" />
       <TodoList>
-        {todos.map((todo) => (
+        {todoList.map((todo) => (
           <TodoItem key={todo.id} todo={todo} />
         ))}
       </TodoList>

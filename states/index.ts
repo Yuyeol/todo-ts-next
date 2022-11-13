@@ -1,9 +1,26 @@
-import { TodoProps } from 'components/todoList/TodoItem';
-import { TagProps } from 'components/todoList/TodoTag';
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
-export const todoState = atom<TodoProps[]>({
-  key: 'todoState',
+export interface TTodo {
+  id: string;
+  title: string;
+  content: string;
+  createDate: string;
+  modifyDate: string;
+  dueDate: string;
+  completeDate: string;
+  isComplete: boolean;
+  tags: TTag[];
+}
+
+export interface TTag {
+  id: string;
+  name: string;
+  fontColor: string;
+  backgroundColor: string;
+}
+
+export const todoListState = atom<TTodo[]>({
+  key: 'todoListState',
   default: [
     {
       id: '1',
@@ -55,7 +72,8 @@ export const todoState = atom<TodoProps[]>({
     },
   ],
 });
-export const tagState = atom<TagProps[]>({
+
+export const tagState = atom<TTag[]>({
   key: 'tagState',
   default: [
     {
