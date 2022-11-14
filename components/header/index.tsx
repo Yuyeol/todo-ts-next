@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Common } from 'styles/GlobalStyle';
 import { FaBars, FaPlus } from 'react-icons/fa';
+import { useRouter } from 'next/router';
 
 const BlankBox = styled.div`
   height: 40px;
@@ -24,6 +25,7 @@ const Title = styled.div`
 `;
 
 const Header = () => {
+  const router = useRouter();
   return (
     <>
       <BlankBox />
@@ -33,7 +35,7 @@ const Header = () => {
         </IconWrapper>
         <Title>TODO LIST</Title>
         <IconWrapper>
-          <FaPlus />
+          <FaPlus onClick={() => router.push('/create')} />
         </IconWrapper>
       </Container>
     </>

@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil';
+import { atom, atomFamily, selector } from 'recoil';
 
 export interface TTodo {
   id: string;
@@ -9,7 +9,7 @@ export interface TTodo {
   dueDate: string;
   completeDate: string;
   isComplete: boolean;
-  tags: TTag[];
+  tagIds: string[];
 }
 
 export interface TTag {
@@ -31,19 +31,19 @@ export const todoListState = atom<TTodo[]>({
       dueDate: '2022-06-06',
       completeDate: '2022-06-06',
       isComplete: true,
-      tags: [
-        {
-          id: '1',
-          name: '1',
-          fontColor: '#FFFFFF',
-          backgroundColor: '#000000',
-        },
-        {
-          id: '2',
-          name: '2',
-          fontColor: '#FFFFFF',
-          backgroundColor: '#000000',
-        },
+      tagIds: [
+        // {
+        //   id: '1',
+        //   name: '1',
+        //   fontColor: '#FFFFFF',
+        //   backgroundColor: '#000000',
+        // },
+        // {
+        //   id: '2',
+        //   name: '2',
+        //   fontColor: '#FFFFFF',
+        //   backgroundColor: '#000000',
+        // },
       ],
     },
     {
@@ -55,19 +55,19 @@ export const todoListState = atom<TTodo[]>({
       dueDate: '2022-06-06',
       completeDate: '2022-06-06',
       isComplete: false,
-      tags: [
-        {
-          id: '1',
-          name: '1',
-          fontColor: '#FFFFFF',
-          backgroundColor: '#000000',
-        },
-        {
-          id: '2',
-          name: '2',
-          fontColor: '#FFFFFF',
-          backgroundColor: '#000000',
-        },
+      tagIds: [
+        // {
+        //   id: '1',
+        //   name: '1',
+        //   fontColor: '#FFFFFF',
+        //   backgroundColor: '#000000',
+        // },
+        // {
+        //   id: '2',
+        //   name: '2',
+        //   fontColor: '#FFFFFF',
+        //   backgroundColor: '#000000',
+        // },
       ],
     },
   ],
@@ -86,15 +86,14 @@ export const filteredTodoListState = selector({
   key: 'filteredTodoListState',
   get: ({ get }) => {
     const filter = get(todoListFilterState);
-    const list = get(todoListState);
-
+    const ids = get(todoIdsState);
     switch (filter) {
       case SHOW_COMPLETED:
-        return list.filter((item) => item.isComplete);
+        return ids.filter((id) => get(todoItemState(id)).isComplete);
       case SHOW_UNCOMPLETED:
-        return list.filter((item) => !item.isComplete);
+        return ids.filter((id) => !get(todoItemState(id)).isComplete);
       default:
-        return list;
+        return ids;
     }
   },
 });
@@ -115,4 +114,40 @@ export const tagState = atom<TTag[]>({
       backgroundColor: '#000000',
     },
   ],
+});
+
+export const todoIdsState = atom<string[]>({
+  key: 'todoIdsState',
+  default: [],
+});
+export const todoItemState = atomFamily<TTodo, string>({
+  key: 'todoItemState',
+  default: (id) => {
+    return {
+      id,
+      title: '',
+      content: '',
+      createDate: '',
+      modifyDate: '',
+      dueDate: '',
+      completeDate: '',
+      isComplete: false,
+      tagIds: [],
+    };
+  },
+});
+export const tagIdsState = atom<string[]>({
+  key: 'tagIdsState',
+  default: [],
+});
+export const tagItemState = atomFamily<TTag, string>({
+  key: 'tagItemState',
+  default: (id) => {
+    return {
+      id,
+      name: '',
+      fontColor: '',
+      backgroundColor: '',
+    };
+  },
 });

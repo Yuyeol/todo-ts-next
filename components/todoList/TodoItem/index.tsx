@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { TTodo } from 'states';
+import { useRecoilValue } from 'recoil';
+import { todoItemState } from 'states';
 import { Common } from 'styles/GlobalStyle';
 import TodoTag from '../TodoTag';
 
@@ -37,10 +38,11 @@ const Date = styled.div`
 `;
 
 interface Props {
-  todo: TTodo;
+  todoId: string;
 }
 
-const TodoItem = ({ todo }: Props) => {
+const TodoItem = ({ todoId }: Props) => {
+  const todo = useRecoilValue(todoItemState(todoId));
   return (
     <Container>
       <Header
@@ -69,8 +71,8 @@ const TodoItem = ({ todo }: Props) => {
         </div>
         <Content style={{ marginBottom: '0.5rem' }}>{todo.content}</Content>
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {todo.tags.map((tag) => (
-            <TodoTag key={tag.id} tag={tag} />
+          {todo.tagIds.map((tagId) => (
+            <TodoTag key={tagId} tagId={tagId} />
           ))}
         </div>
       </div>

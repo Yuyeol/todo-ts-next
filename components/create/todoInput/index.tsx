@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import TodoTag from 'components/todoList/TodoTag';
-import { useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { todoListState, TTag } from 'states';
+import { useCallback, useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { tagIdsState, todoIdsState, todoItemState } from 'states';
 import { Common } from 'styles/GlobalStyle';
 import { nanoid } from 'nanoid';
 import dayjs from 'dayjs';
@@ -61,48 +61,66 @@ const AddButton = styled.div`
   box-shadow: ${Common.shadows.main};
 `;
 
-interface Props {
-  tags: TTag[];
-}
-
-const TodoInput = ({ tags }: Props) => {
+const TodoInput = () => {
   const router = useRouter();
-  const [todos, setTodos] = useRecoilState(todoListState);
+  const [todoIds, setTodoIds] = useRecoilState(todoIdsState);
+  const [newTodoId, setNewTodoId] = useState('');
+  const setTodo = useSetRecoilState(todoItemState(newTodoId));
+
+  const tagIds = useRecoilValue(tagIdsState);
   const [inputs, setInputs] = useState({
     title: '',
     content: '',
     dueDate: '',
   });
-  const [addedTags, setAddedTags] = useState<TTag[]>([]);
+  const [addedTagIds, setAddedTagIds] = useState<string[]>([]);
   const [isTagOpen, setIsTagOpen] = useState(false);
   const date = dayjs().format('YYYY-MM-DD');
 
-  const handleInput = (e: { target: { value: string; name: string } }) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-  };
-  const handleSelectTag = (id: string) => {
-    const selectedTag = tags.find((tag: TTag) => tag.id === id);
-    const duplicateTag = addedTags?.find((tag: TTag) => tag.id === id);
-    selectedTag &&
-      (duplicateTag
-        ? setAddedTags(addedTags.filter((tag) => tag.id !== id))
-        : setAddedTags([...addedTags, selectedTag]));
-  };
-  const handleSubmit = () => {
-    setTodos([
-      ...todos,
-      {
-        id: nanoid(),
-        createDate: date,
-        ...inputs,
-        isComplete: false,
-        completeDate: '',
-        modifyDate: '',
-        tags: addedTags,
-      },
-    ]);
+  const handleInput = useCallback(
+    (e: { target: { value: string; name: string } }) => {
+      setInputs({ ...inputs, [e.target.name]: e.target.value });
+    },
+    [inputs],
+  );
+  const handleSelectTag = useCallback(
+    (id: string) => {
+      const selectedTagId = tagIds.find((tagId) => tagId === id);
+      const duplicateTagId = addedTagIds?.find((tagId) => tagId === id);
+      selectedTagId &&
+        (duplicateTagId
+          ? setAddedTagIds(addedTagIds.filter((tagId) => tagId !== id))
+          : setAddedTagIds([...addedTagIds, selectedTagId]));
+    },
+    [addedTagIds, tagIds],
+  );
+
+  const handleSubmit = useCallback(() => {
+    setTodoIds(() => [...todoIds, newTodoId]);
+    setTodo({
+      id: newTodoId,
+      createDate: date,
+      ...inputs,
+      isComplete: false,
+      completeDate: '',
+      modifyDate: '',
+      tagIds: addedTagIds,
+    });
     router.push('/');
-  };
+  }, [
+    setTodoIds,
+    setTodo,
+    newTodoId,
+    date,
+    inputs,
+    addedTagIds,
+    router,
+    todoIds,
+  ]);
+  useEffect(() => {
+    const id = nanoid();
+    setNewTodoId(id);
+  }, []);
   return (
     <Container>
       <Header
@@ -161,13 +179,12 @@ const TodoInput = ({ tags }: Props) => {
         </div>
         {isTagOpen && (
           <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {tags.map((tag) => (
-              <div key={tag.id} onClick={() => handleSelectTag(tag.id)}>
+            {tagIds.map((tagId) => (
+              <div key={tagId} onClick={() => handleSelectTag(tagId)}>
                 <TodoTag
-                  key={tag.id}
-                  tag={tag}
+                  tagId={tagId}
                   isSelected={
-                    !!addedTags.find((addedTag) => addedTag.id === tag.id)
+                    !!addedTagIds.find((addedTagId) => addedTagId === tagId)
                   }
                 />
               </div>

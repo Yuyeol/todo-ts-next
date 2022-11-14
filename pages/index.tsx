@@ -12,7 +12,8 @@ const Container = styled.div`
 `;
 
 const Home: NextPage = () => {
-  const todoList = useRecoilValue(filteredTodoListState);
+  const todoIds = useRecoilValue(filteredTodoListState);
+
   const setTodoListFilter = useSetRecoilState(todoListFilterState);
   useEffect(() => {
     setTodoListFilter(SHOW_ALL);
@@ -22,8 +23,8 @@ const Home: NextPage = () => {
     <Container>
       <Seo title="홈" />
       <TodoList>
-        {todoList.map((todo) => (
-          <TodoItem key={todo.id} todo={todo} />
+        {todoIds.map((todoId) => (
+          <TodoItem key={todoId} todoId={todoId} />
         ))}
       </TodoList>
     </Container>

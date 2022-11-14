@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
-import { TTag } from 'states';
+import { useRecoilValue } from 'recoil';
+import { tagItemState } from 'states';
 import { Common } from 'styles/GlobalStyle';
 
 const Container = styled.div<{
@@ -20,11 +21,12 @@ const Container = styled.div<{
 `;
 
 interface Props {
-  tag: TTag;
+  tagId: string;
   isSelected?: boolean;
 }
 
-const TodoTag = ({ tag, isSelected }: Props) => {
+const TodoTag = ({ tagId, isSelected }: Props) => {
+  const tag = useRecoilValue(tagItemState(tagId));
   return (
     <Container
       fontColor={tag.fontColor}
